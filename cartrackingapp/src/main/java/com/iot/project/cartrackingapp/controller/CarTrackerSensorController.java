@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,11 +24,12 @@ import com.iot.project.cartrackingapp.model.Vehicle;
 import com.iot.project.cartrackingapp.service.CarTrackerSensorService;
 
 @RestController
-@EnableAutoConfiguration // Do we need this?
+@EnableAutoConfiguration
+@ComponentScan(value = "com.iot.project")
 @RequestMapping(value = "/cartrackerdata")
 public class CarTrackerSensorController {
 
-	@Autowired // Do we need this?
+	@Autowired
 	CarTrackerSensorService carTrackerSensorService;
 
 	@GetMapping("/")
