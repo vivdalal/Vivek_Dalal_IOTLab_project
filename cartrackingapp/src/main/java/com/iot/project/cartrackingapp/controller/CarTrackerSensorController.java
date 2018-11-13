@@ -32,6 +32,7 @@ public class CarTrackerSensorController {
 	@Autowired
 	CarTrackerSensorService carTrackerSensorService;
 
+	// For testing purpose
 	@GetMapping("/")
 	public Map<String, Object> greeting() {
 		return Collections.singletonMap("message", "Hello World");
@@ -39,15 +40,13 @@ public class CarTrackerSensorController {
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/vehicles", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void putVehicles(@RequestBody List<Vehicle> vehicleList) throws ValidationException, ServiceException {
-
 		carTrackerSensorService.saveAllVehicles(vehicleList);
-
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/reading", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public SensorReading saveReading(@RequestBody SensorReading sensorReading)
+	@RequestMapping(method = RequestMethod.POST, value = "/reading", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public void saveReading(@RequestBody SensorReading sensorReading)
 			throws DataSyncException, ServiceException, ValidationException {
-		return carTrackerSensorService.saveReading(sensorReading);
+		carTrackerSensorService.saveReading(sensorReading);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/vehicles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

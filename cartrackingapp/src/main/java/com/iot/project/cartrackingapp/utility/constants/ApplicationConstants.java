@@ -6,6 +6,8 @@ public class ApplicationConstants {
 	public static final String VEHICLE_TYPE = "car";
 	public static final String READING_TYPE = "sensor";
 	
+	public static final String SCHEME = "http";
+	
 	public static final String VIN_FLD = "vin";
 	public static final String TIMESTAMP_FLD = "timestamp";
 	public static final String ALRT_LEVEL_FLD = "alertLevel";
