@@ -32,5 +32,5 @@ https://www.elastic.co/downloads/kibana
 3. Run the following command in the Vivek_Dalal_IOT_Lab_project/cartrackingapp/ 
 4. After successful install, run the command mentioned in the  Vivek_Dalal_IOT_Lab_project/cartrackingapp/ run-app-command.txt file
 
-Authors
+Authors:
 Vivek Dalal
