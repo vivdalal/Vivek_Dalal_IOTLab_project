@@ -13,21 +13,35 @@ public interface CarTrackerSensorService {
 
 	// Input: None
 	// Output: List all the vehicles whose data has been reported till date
+	// Action : Fetches all the vehicles from Elasticsearch
 	public List<Vehicle> findAllVehicles() throws ServiceException, NoDataFoundException;
 
 	// Input: Number of hours from current time for which the query needs to
 	// performed
 	// Output: All High Alert Readings for the past numOfHours
+	// Action : Fetches all the High Alerts in the past numOfHours(2 for our case)
+	// from Elasticsearch
 	public List<SensorReading> findHighAlerts(int numOfHours) throws NoDataFoundException, ServiceException;
 
 	// Input: VIN for a paerticular vehicle
 	// Output: List of all the SensorReading recorded for the particular Vehicle
 	// with VIN = vin
+	// Action : Fetches all historical reading in a paginated way from Elasticsearch
+	// for the vin
 	public List<SensorReading> findAllHistoricalReadings(String vin) throws ServiceException, NoDataFoundException;
 
+	// Input : List of Vehicles
+	// Output : None
+	// Action : Save the vehicle list to DB - Elasticsearch
 	public void saveAllVehicles(List<Vehicle> vehicleList) throws ValidationException, ServiceException;
 
-	public SensorReading saveReading(SensorReading sensorReading)
+	// Input : Sensor Data
+	// Output : None
+	// Action : 1. Validate the sensor data
+	// 2. Check whether the Vehicle for which this data is reported is present in Elasticsearch
+	// 3. Run Alert Business rules and save the results in the Reading document in Elasticsearch
+	// 4. Save the sensor data to DB - Elasticsearch
+	public void saveReading(SensorReading sensorReading)
 			throws DataSyncException, ServiceException, ValidationException;
 
 }

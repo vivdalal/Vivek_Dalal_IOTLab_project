@@ -21,7 +21,6 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.Scroll;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -45,14 +44,6 @@ public class Repository {
 
 	@Autowired
 	DataValidator dataValidator;
-
-	public void saveVehicle(Vehicle vehicle) {
-
-	}
-
-	public void updateVehicle(Vehicle vehicle) {
-
-	}
 
 	public List<Vehicle> findAllVehicles() throws ServiceException {
 
@@ -113,9 +104,6 @@ public class Repository {
 
 	}
 
-	public void deleteVehicleById(String vin) {
-
-	}
 
 	public void bulkSaveVehicles(List<Vehicle> vehicleList) throws ValidationException, ServiceException {
 		// Saving the vehicleList to Elasticsearch Index. - Bulk Insertion
@@ -231,7 +219,8 @@ public class Repository {
 			boolean succeeded = clearScrollResponse.isSucceeded();
 
 			if (succeeded) {
-				System.out.println("Scroll context cleared successfully.");
+				//System.out.println("Scroll context cleared successfully.");
+				
 			}
 
 		} catch (IOException ioException) {

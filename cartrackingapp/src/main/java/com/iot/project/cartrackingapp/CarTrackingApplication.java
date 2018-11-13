@@ -14,13 +14,11 @@ public class CarTrackingApplication implements WebMvcConfigurer {
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		
-		//registry.addMapping("/**");
-		registry.addMapping("/**")
-				.allowedOrigins("http://mocker.ennate.academy/")
-				.allowedMethods("PUT", "DELETE", "POST", "GET")
-				.allowedHeaders("*")
-				.allowedOrigins("*")
+
+		// Adding CORS(Cross Origin Resource Sharing) configuration for the required
+		// client.
+		registry.addMapping("/**").allowedOrigins("http://mocker.ennate.academy/")
+				.allowedMethods("PUT", "DELETE", "POST", "GET").allowedHeaders("*").allowedOrigins("*")
 				.exposedHeaders("Access-Control-Allow-Origin:*");
 	}
 }

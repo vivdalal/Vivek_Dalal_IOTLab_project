@@ -3,24 +3,22 @@ package com.iot.project.cartrackingapp.persistance.connection;
 import java.io.IOException;
 
 import org.apache.http.HttpHost;
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iot.project.cartrackingapp.model.Vehicle;
+import com.iot.project.cartrackingapp.utility.constants.ApplicationConstants;
 
 //Wrapper class to the RestHighLevelClient
 @Component
 public class ESClient {
+	
 
-	private static final String HOST = "localhost";
-	private static final int PORT_ONE = 9200;
-	private static final int PORT_TWO = 9201;
-	private static final String SCHEME = "http";
+	private static String HOST;
+	private static int PORT_ONE;
+	private static int PORT_TWO;
+	private static final String SCHEME = ApplicationConstants.SCHEME;
 
 	// Singleton instance of the RestHighLevelClient
 	private static RestHighLevelClient restHighLevelClient;
@@ -28,6 +26,23 @@ public class ESClient {
 	private ESClient() {
 
 	}
+	
+	
+	@Value("${ES.HOST}")
+    public void setHost(String host) {
+		HOST = host;
+    }
+	
+	@Value("${ES.PORT.ONE}")
+    public void setPortOne(String portOne) {
+		PORT_ONE = Integer.parseInt(portOne);
+    }
+	
+	@Value("${ES.PORT.TWO}")
+    public void setPortTwo(String portTwo) {
+		PORT_TWO = Integer.parseInt(portTwo);
+    }
+	
 
 	public static RestHighLevelClient getConnection() {
 
@@ -45,29 +60,8 @@ public class ESClient {
 		return restHighLevelClient;
 	}
 
-	private static synchronized void closeConnection() throws IOException {
+	public static synchronized void closeConnection() throws IOException {
 		restHighLevelClient.close();
 		restHighLevelClient = null;
-	}
-
-	public static void main(String[] args) throws IOException {
-		// Testing the ESClient
-		getVehicleById("1234");
-		System.out.println("Returned successfully");
-		closeConnection();
-
-	}
-
-	private static Vehicle getVehicleById(String id) {
-		GetRequest getVehicleRequest = new GetRequest("vehicle", "car", id);
-		GetResponse getResponse = null;
-		ObjectMapper mapper = new ObjectMapper();
-		RestHighLevelClient esClient = getConnection();
-		try {
-			getResponse = esClient.get(getVehicleRequest, RequestOptions.DEFAULT);
-		} catch (java.io.IOException e) {
-			e.getLocalizedMessage();
-		}
-		return getResponse != null ? mapper.convertValue(getResponse.getSourceAsMap(), Vehicle.class) : null;
 	}
 }
