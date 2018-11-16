@@ -18,7 +18,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
-
 @RunWith(SpringRunner.class)
 @WebMvcTest(CarTrackerSensorController.class)
 @AutoConfigureRestDocs(outputDir = "target/snippets")
@@ -26,20 +25,17 @@ public class CarTrackerSensorControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-	
-	
-//    .andDo(document("home", responseFields(
-//        fieldWithPath("message").description("The welcome message for the user.")
-//    ));
-	
+
 	@Test
-	public void shouldReturnDefaultMessage() throws Exception{
-		 this.mockMvc.perform(get("/cartrackerdata/")).andDo(print()).andExpect(status().isOk())
-         .andExpect(content().string(containsString("Hello World")))
-         .andDo(document("home",responseFields( 
-        		 fieldWithPath("message").description("The welcome message for the user."))));
+	public void shouldReturnDefaultMessage() throws Exception {
+		this.mockMvc.perform(get("/cartrackerdata/")).andDo(print()).andExpect(status().isOk())
+				.andExpect(content().string(containsString("Hello World"))).andDo(document("home",
+						responseFields(fieldWithPath("message").description("The welcome message for the user."))));
 	}
-	
-	
-	
+
+	@Test
+	public void shouldReturnAllVehicles() throws Exception {
+		this.mockMvc.perform(get("/cartrackerdata/vehicles")).andDo(print()).andExpect(status().isOk()).andDo(document(
+				"home", responseFields(fieldWithPath("message").description("The welcome message for the user."))));
+	}
 }
