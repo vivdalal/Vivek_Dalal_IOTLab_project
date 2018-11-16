@@ -1,36 +1,36 @@
 {
 	"info": {
-		"_postman_id": "1f6997d0-4554-4548-a567-038d35de9909",
+		"_postman_id": "b0c4bdec-7d26-44ca-afd9-c9e566d4631b",
 		"name": "IOT-Project",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "findAllVehicles",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": ""
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Save Reading",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n  \"vin\": \"2T1BU4EE4DC919097\",\n  \"latitude\": 72.1531,\n  \"longitude\": 95.9764,\n  \"timestamp\": \"2018-11-12T20:00:26.042Z\",\n  \"fuelVolume\": 2,\n  \"speed\": 62,\n  \"engineHp\": 307,\n  \"checkEngineLightOn\": false,\n  \"engineCoolantLow\": false,\n  \"cruiseControlOn\": false,\n  \"engineRpm\": 5795,\n  \"tires\": {\n    \"frontLeft\": 39,\n    \"frontRight\": 30,\n    \"rearLeft\": 32,\n    \"rearRight\": 25\n  },\n  \"alertLevel\": null,\n  \"alertReason\": null\n}"
 				},
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:8080/cartrackerdata/reading",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cartrackerdata",
+						"reading"
+					]
 				}
 			},
 			"response": []
@@ -45,7 +45,16 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:8080/cartrackerdata/vehicles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cartrackerdata",
+						"vehicles"
+					]
 				}
 			},
 			"response": []
@@ -60,7 +69,17 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:8080/cartrackerdata/histreading/WBAFR1C50BC747531",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cartrackerdata",
+						"histreading",
+						"WBAFR1C50BC747531"
+					]
 				}
 			},
 			"response": []
@@ -75,7 +94,17 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:8080/cartrackerdata/highalerts/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cartrackerdata",
+						"highalerts",
+						"2"
+					]
 				}
 			},
 			"response": []
@@ -83,14 +112,25 @@
 		{
 			"name": "Create Indices",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:8080/cartrackerdata/system/indices/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cartrackerdata",
+						"system",
+						"indices",
+						"create"
+					]
 				}
 			},
 			"response": []
@@ -98,14 +138,25 @@
 		{
 			"name": "Delete Index",
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:8080/cartrackerdata/system/indices/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cartrackerdata",
+						"system",
+						"indices",
+						"delete"
+					]
 				}
 			},
 			"response": []
