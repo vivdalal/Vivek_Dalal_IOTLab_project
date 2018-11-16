@@ -48,6 +48,12 @@ Run the application:
 4. Open Postman
 1. Import the IOT-Project.postman_collection.json file into Postman. File can be found in the /documentation/evidences directory
 2. Try out the different HTTP POST/PUT/GET/DELETE requests
+3. You can create the visualization of your choice on Kibana. Follow the below steps
+  1. Spin up Kibana.
+  2. Go to the URL : http://localhost:5601
+  3. Go to the Dashboard section from the left
+  3. Select the attribute from the reading index on which you want live updates. For eg : alertlevel is not NONE
+  4. The query will execute at the interval you mention and the output will be shown below on the dashboard
 
 Author:
 Vivek Dalal
