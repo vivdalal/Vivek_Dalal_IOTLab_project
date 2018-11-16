@@ -1,14 +1,11 @@
 package com.iot.project.cartrackingapp.controller;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +29,7 @@ public class CarTrackerSensorController {
 	@Autowired
 	CarTrackerSensorService carTrackerSensorService;
 
-	// For testing purpose
-	@GetMapping("/")
-	public Map<String, Object> greeting() {
-		return Collections.singletonMap("message", "Hello World");
-	}
+
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/vehicles", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void putVehicles(@RequestBody List<Vehicle> vehicleList) throws ValidationException, ServiceException {
@@ -68,13 +61,19 @@ public class CarTrackerSensorController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/system/indices/create")
-	public void createIndices() throws DataSyncException, ServiceException, ValidationException {
+	public void createIndices() throws DataSyncException, ServiceException {
 		carTrackerSensorService.createIndices();
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/system/indices/delete")
-	public void deleteIndices() throws DataSyncException, ServiceException, ValidationException {
+	public void deleteIndices() throws DataSyncException, ServiceException {
 		carTrackerSensorService.deleteIndices();
 	}
+	
+//	// For testing purpose
+//	@GetMapping("/")
+//	public Map<String, Object> greeting() {
+//		return Collections.singletonMap("message", "Hello World");
+//	}
 
 }

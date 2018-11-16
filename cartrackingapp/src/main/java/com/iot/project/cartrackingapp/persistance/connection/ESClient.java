@@ -13,7 +13,6 @@ import com.iot.project.cartrackingapp.utility.constants.ApplicationConstants;
 //Wrapper class to the RestHighLevelClient
 @Component
 public class ESClient {
-	
 
 	private static String HOST;
 	private static int PORT_ONE;
@@ -26,23 +25,21 @@ public class ESClient {
 	private ESClient() {
 
 	}
-	
-	
+
 	@Value("${ES.HOST}")
-    public void setHost(String host) {
+	public void setHost(String host) {
 		HOST = host;
-    }
-	
+	}
+
 	@Value("${ES.PORT.ONE}")
-    public void setPortOne(String portOne) {
+	public void setPortOne(String portOne) {
 		PORT_ONE = Integer.parseInt(portOne);
-    }
-	
+	}
+
 	@Value("${ES.PORT.TWO}")
-    public void setPortTwo(String portTwo) {
+	public void setPortTwo(String portTwo) {
 		PORT_TWO = Integer.parseInt(portTwo);
-    }
-	
+	}
 
 	public static RestHighLevelClient getConnection() {
 
