@@ -46,9 +46,14 @@ Run the application:
 2. http://localhost:8080/cartrackerdata/reading
 3. Hit start on both the endpoints to begin pushing data to the service
 4. Open Postman
+
+
+
 1. Import the IOT-Project.postman_collection.json file into Postman. File can be found in the /documentation/evidences directory
 2. Try out the different HTTP POST/PUT/GET/DELETE requests
-3. You can create the visualization of your choice on Kibana. Follow the below steps
+
+
+You can create the visualization of your choice on Kibana. Follow the below steps
   - Spin up Kibana.
   - Go to the URL : http://localhost:5601
   - Go to the Dashboard section from the left
