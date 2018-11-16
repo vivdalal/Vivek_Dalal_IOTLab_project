@@ -1,0 +1,27 @@
+###Elasticsearch
+
+##Search Query
+##Get High Alert reading in the last 2 hours
+
+GET reading/sensor/_search
+{
+  "query": {
+    "bool":{
+      "must": [
+        {"range": {
+      "timestamp": {
+        "gte": "now-2h",
+        "lte": "now"
+      }
+    }},{
+      "term": {
+        "alertLevel": {
+          "value": "HIGH"
+        }
+      }
+    }
+      ]
+    }
+    
+  }
+}

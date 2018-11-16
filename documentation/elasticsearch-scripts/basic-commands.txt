@@ -1,0 +1,14 @@
+###Elasticsearch
+
+##Basic Commands
+
+GET _cluster/health
+GET _cat/nodes?v
+
+GET vehicle/_mapping
+GET reading/_mapping
+
+GET vehicle/car/_search?size=1000
+GET reading/sensor/_search?size=1000
+
+GET _cat/indices?v
