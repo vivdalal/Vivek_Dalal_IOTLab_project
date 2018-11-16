@@ -1,0 +1,38 @@
+###Elasticsearch
+
+##Vehicle Mapping
+PUT vehicle
+{
+  "settings": {
+    "number_of_shards": 4,
+    "number_of_replicas": 0,
+    "refresh_interval": "1ms"
+  },
+  "mappings": {
+    "car": {
+      "properties": {
+        "vin": {
+          "type": "keyword"
+        },
+        "make": {
+          "enabled": false
+        },
+        "model": {
+          "enabled": false
+        },
+        "year": {
+          "enabled": false
+        },
+        "redLineRpm": {
+          "enabled": false
+        },
+        "maxFuelVolume": {
+          "enabled": false
+        },
+        "lastServiceDate": {
+          "enabled": false
+        }
+      }
+    }
+  }
+}

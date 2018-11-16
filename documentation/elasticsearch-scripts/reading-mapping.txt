@@ -1,0 +1,74 @@
+###Elasticsearch
+
+##reading mapping
+
+PUT reading
+{
+  "settings": {
+    "number_of_shards": 6,
+    "number_of_replicas": 1,
+    "refresh_interval": "1ms"
+  },
+  "mappings": {
+    "sensor": {
+      "properties": {
+        "vin": {
+          "type": "keyword"
+        },
+        "latitude": {
+          "enabled": false
+        },
+        "longitude": {
+          "enabled": false
+        },
+        "timestamp": {
+          "type": "date"
+        },
+        "fuelVolumne": {
+          "enabled": false
+        },
+        "speed": {
+          "enabled": false
+        },
+        "engineHp": {
+          "enabled": false
+        },
+        "checkEngineLightOn": {
+          "enabled": false
+        },
+        "engineCoolantLow": {
+          "enabled": false
+        },
+        "cruiseControlOn": {
+          "enabled": false
+        },
+        "engineRpm": {
+          "enabled": false
+        },
+        "tires": {
+          "type": "nested",
+          "properties": {
+            "frontLeft": {
+              "enabled": false
+            },
+            "frontRight": {
+              "enabled": false
+            },
+            "rearLeft": {
+              "enabled": false
+            },
+            "rearRight": {
+              "enabled": false
+            }
+          }
+        },
+        "alertLevel":{
+          "type": "keyword"
+        },
+        "alertReason":{
+          "enabled": false
+        }
+      }
+    }
+  }
+}
