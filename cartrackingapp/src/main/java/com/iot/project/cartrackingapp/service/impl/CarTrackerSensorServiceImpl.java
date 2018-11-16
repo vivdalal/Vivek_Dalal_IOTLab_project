@@ -93,6 +93,7 @@ public class CarTrackerSensorServiceImpl implements CarTrackerSensorService {
 
 		// Vehicle data for this reading is present in the DB
 		// Validating the Reading data
+		logger.debug("Validating the Sensor request");
 		dataValidator.validateReading(sensorReading);
 
 		// Checking whether the vehicle data is present for the reading received
@@ -127,16 +128,18 @@ public class CarTrackerSensorServiceImpl implements CarTrackerSensorService {
 
 	@Override
 	public void createIndices() throws ServiceException, DataSyncException {
+		logger.info("Request to create indices in Elasticsearch received");
 		repository.createIndices();
-		
+		logger.info("Request to create indices in Elasticsearch processed");
+
 	}
 
 	@Override
 	public void deleteIndices() throws ServiceException, DataSyncException {
+		logger.info("Request to delete indices in Elasticsearch received");
 		repository.deleteIndices();
-		
+		logger.info("Request to delete indices in Elasticsearch processed");
+
 	}
-	
-	
 
 }

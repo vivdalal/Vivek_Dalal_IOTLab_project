@@ -14,7 +14,7 @@ public class AlertRules {
 	public AlertWrapper checkForAlerts(SensorReading sensorReading, Vehicle vehicle) {
 		AlertWrapper alert = new AlertWrapper();
 
-		// Checing for High Alert condition. Engine RPM > RedLine RPM
+		// Checking for High Alert condition. Engine RPM > RedLine RPM
 		// If High Alert, then setting the level and reason
 		if (sensorReading.getEngineRpm() > vehicle.getRedlineRpm()) {
 			// High alert condition met
@@ -29,8 +29,7 @@ public class AlertRules {
 			alert.setAlertReason("Fuel Volume < 10% of Max Fuel Volume");
 			return alert;
 		} else if (checkTirePressure(sensorReading.getTires())) {
-			// Checking for Low Alert condition. Tire pressure of any tire < 32 psi || > 36
-			// psi
+			// Checking for Low Alert condition. Tire pressure of any tire < 32 psi || > 36 psi
 			// Low Alert condition is met, setting the level and reason
 			alert.setAlertLevel(AlertLevel.LOW.name());
 			alert.setAlertReason("Tire Pressure for one of the tires is < 32 psi || > 36 psi");
@@ -58,10 +57,7 @@ public class AlertRules {
 	// Input : each tire pressure as int
 	// Output : true if the tire has pressure < 32 || > 36
 	private boolean checkTirePressure(int tire) {
-		if (tire < 32 || tire > 36) {
-			return true;
-		}
-		return false;
+		return tire < 32 || tire > 36 ? true : false;
 
 	}
 

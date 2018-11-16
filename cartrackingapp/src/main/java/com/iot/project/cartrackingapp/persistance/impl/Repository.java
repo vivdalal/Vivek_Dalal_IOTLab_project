@@ -60,6 +60,7 @@ public class Repository {
 
 	public List<Vehicle> findAllVehicles() throws ServiceException {
 
+		logger.debug("Fetching all vehicles");
 		List<Vehicle> vehicleList = null;
 
 		final Scroll scroll = new Scroll(TimeValue.timeValueMinutes(1L));
@@ -74,6 +75,7 @@ public class Repository {
 		searchRequest.source(searchSourceBuilder);
 
 		try {
+			logger.debug("Synchronous Call to fetch all vehicles");
 			SearchResponse searchResponse = ESClient.getConnection().search(searchRequest, RequestOptions.DEFAULT);
 			String scrollId = searchResponse.getScrollId();
 			SearchHit[] searchHits = searchResponse.getHits().getHits();
@@ -105,7 +107,7 @@ public class Repository {
 			boolean succeeded = clearScrollResponse.isSucceeded();
 
 			if (succeeded) {
-				// System.out.println("Scroll context cleared successfully.");
+				logger.debug("Scroll cleared sucessfully");
 			}
 
 		} catch (IOException ioException) {
@@ -118,6 +120,7 @@ public class Repository {
 
 	public void bulkSaveVehicles(List<Vehicle> vehicleList) throws ValidationException, ServiceException {
 		// Saving the vehicleList to Elasticsearch Index. - Bulk Insertion
+		logger.debug("Saving all vehicles in Bulk");
 		BulkRequest request = new BulkRequest();
 
 		for (Vehicle vehicle : vehicleList) {
@@ -125,6 +128,7 @@ public class Repository {
 			dataValidator.validateVehicle(vehicle);
 
 			try {
+				logger.debug("Generating Bulk request");
 				request.add(new IndexRequest(ApplicationConstants.VEHICLE_INDEX, ApplicationConstants.VEHICLE_TYPE,
 						vehicle.getVin()).source(mapper.writeValueAsString(vehicle), XContentType.JSON));
 			} catch (JsonProcessingException jsonProcessingException) {
@@ -137,6 +141,7 @@ public class Repository {
 		// BulkResponse bulkResponse = esClient.getConnection().bulk(request,
 		// RequestOptions.DEFAULT);
 		try {
+			logger.debug("Executing bulk indexing request in synchronous mode");
 			ESClient.getConnection().bulk(request, RequestOptions.DEFAULT);
 		} catch (IOException ioException) {
 			throw new ServiceException("Unable to save the Vehicle data to the DB", ioException);
@@ -147,17 +152,21 @@ public class Repository {
 	public Vehicle findVehicleById(String vin) throws ServiceException {
 		Vehicle vehicle = null;
 
+		logger.debug("Getting Vehicle information by ID");
 		GetRequest getRequest = new GetRequest(ApplicationConstants.VEHICLE_INDEX, ApplicationConstants.VEHICLE_TYPE,
 				vin);
 
 		GetResponse response = null;
 		try {
+			logger.debug("Finding by ID on vehicle index in Synchronous mode");
 			response = ESClient.getConnection().get(getRequest, RequestOptions.DEFAULT);
 			if (response.isExists()) {
+
 				String sourceAsString = response.getSourceAsString();
 				vehicle = mapper.readValue(sourceAsString, Vehicle.class);
 			}
 		} catch (IOException ioException) {
+			logger.error("Something went wrong while fetching the Vehicle data from DB for Vin: " + vin, ioException);
 			throw new ServiceException("Something went wrong while fetching the Vehicle data from DB for Vin: " + vin,
 					ioException);
 		}
@@ -167,6 +176,7 @@ public class Repository {
 
 	public void saveReading(SensorReading sensorReading) throws ServiceException {
 		try {
+			logger.debug("Saving a reading to the reading index");
 			IndexRequest request = new IndexRequest(ApplicationConstants.READING_INDEX,
 					ApplicationConstants.READING_TYPE).source(mapper.writeValueAsString(sensorReading),
 							XContentType.JSON);
@@ -174,8 +184,10 @@ public class Repository {
 			ESClient.getConnection().index(request, RequestOptions.DEFAULT);
 
 		} catch (JsonProcessingException jsonProcessingException) {
+			logger.error("Unable to parse the SensorReading", jsonProcessingException);
 			throw new ServiceException("Unable to parse the SensorReading", jsonProcessingException);
 		} catch (IOException ioException) {
+			logger.error("Unable to save the SensorReading to DB. Vin : " + sensorReading.getVin(), ioException);
 			throw new ServiceException("Unable to save the SensorReading to DB. Vin : " + sensorReading.getVin(),
 					ioException);
 		}
@@ -184,6 +196,7 @@ public class Repository {
 
 	public List<SensorReading> findAllHistoricalReadingsForId(String vin) throws ServiceException {
 
+		logger.debug("Fetching entire historical data for a vehicle based on ID");
 		List<SensorReading> sensorReadingList = null;
 
 		final Scroll scroll = new Scroll(TimeValue.timeValueMinutes(1L));
@@ -199,6 +212,7 @@ public class Repository {
 		searchRequest.source(searchSourceBuilder);
 
 		try {
+
 			SearchResponse searchResponse = ESClient.getConnection().search(searchRequest, RequestOptions.DEFAULT);
 			String scrollId = searchResponse.getScrollId();
 			SearchHit[] searchHits = searchResponse.getHits().getHits();
@@ -230,11 +244,12 @@ public class Repository {
 			boolean succeeded = clearScrollResponse.isSucceeded();
 
 			if (succeeded) {
-				// System.out.println("Scroll context cleared successfully.");
+				logger.debug("Scroll cleared successfully");
 
 			}
 
 		} catch (IOException ioException) {
+			logger.error("Unable to perform search on the DB", ioException);
 			throw new ServiceException("Unable to perform search on the DB", ioException);
 		}
 
@@ -243,7 +258,7 @@ public class Repository {
 	}
 
 	public List<SensorReading> findHighAlerts(int numOfHours) throws ServiceException {
-
+		logger.debug("Fetching all High Alerts in the last " + numOfHours);
 		List<SensorReading> sensorReadingList = null;
 
 		BoolQueryBuilder alertAndDataRangeQuery = QueryBuilders.boolQuery();
@@ -295,7 +310,7 @@ public class Repository {
 			boolean succeeded = clearScrollResponse.isSucceeded();
 
 			if (succeeded) {
-				// System.out.println("Scroll context cleared successfully.");
+				logger.debug("Scroll cleared successfully");
 			}
 
 		} catch (IOException ioException) {
@@ -350,6 +365,7 @@ public class Repository {
 	public void createIndex(String indexName, String source) throws DataSyncException, ServiceException {
 
 		if (checkIfIndexExists(indexName)) {
+			logger.error("Index already exists : " + ApplicationConstants.READING_INDEX);
 			throw new DataSyncException("Index already exists : " + ApplicationConstants.READING_INDEX);
 		}
 
@@ -359,6 +375,7 @@ public class Repository {
 		try {
 			ESClient.getConnection().indices().create(createIndexRequest, RequestOptions.DEFAULT);
 		} catch (IOException ioException) {
+			logger.error("Unable to Create Index", ioException);
 			throw new ServiceException("Unable to Create Index", ioException);
 		}
 	}
@@ -368,12 +385,14 @@ public class Repository {
 		if (checkIfIndexExists(ApplicationConstants.VEHICLE_INDEX)) {
 			deleteIndex(ApplicationConstants.VEHICLE_INDEX);
 		} else {
+			logger.error("Index does not  exists : " + ApplicationConstants.VEHICLE_INDEX);
 			throw new DataSyncException("Index does not  exists : " + ApplicationConstants.VEHICLE_INDEX);
 		}
 
 		if (checkIfIndexExists(ApplicationConstants.READING_INDEX)) {
 			deleteIndex(ApplicationConstants.READING_INDEX);
 		} else {
+			logger.error("Index does not exists : " + ApplicationConstants.READING_INDEX);
 			throw new DataSyncException("Index does not exists : " + ApplicationConstants.READING_INDEX);
 		}
 
