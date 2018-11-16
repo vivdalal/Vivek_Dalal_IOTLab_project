@@ -125,4 +125,18 @@ public class CarTrackerSensorServiceImpl implements CarTrackerSensorService {
 
 	}
 
+	@Override
+	public void createIndices() throws ServiceException, DataSyncException {
+		repository.createIndices();
+		
+	}
+
+	@Override
+	public void deleteIndices() throws ServiceException, DataSyncException {
+		repository.deleteIndices();
+		
+	}
+	
+	
+
 }

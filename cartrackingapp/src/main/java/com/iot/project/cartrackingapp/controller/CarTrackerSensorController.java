@@ -67,4 +67,14 @@ public class CarTrackerSensorController {
 		return carTrackerSensorService.findAllHistoricalReadings(vin);
 	}
 
+	@RequestMapping(method = RequestMethod.POST, value = "/system/indices/create")
+	public void createIndices() throws DataSyncException, ServiceException, ValidationException {
+		carTrackerSensorService.createIndices();
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE, value = "/system/indices/delete")
+	public void deleteIndices() throws DataSyncException, ServiceException, ValidationException {
+		carTrackerSensorService.deleteIndices();
+	}
+
 }

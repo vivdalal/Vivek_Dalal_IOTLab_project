@@ -1,15 +1,22 @@
 package com.iot.project.cartrackingapp;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.iot.project.cartrackingapp.controller.CarTrackerSensorController;
+
 @SpringBootApplication
 public class CarTrackingApplication implements WebMvcConfigurer {
 
+	@Autowired
+	CarTrackerSensorController carTrackerSensorController;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CarTrackingApplication.class, args);
+		
 	}
 
 	@Override

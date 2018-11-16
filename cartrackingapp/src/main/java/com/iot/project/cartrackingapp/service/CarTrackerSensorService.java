@@ -43,5 +43,16 @@ public interface CarTrackerSensorService {
 	// 4. Save the sensor data to DB - Elasticsearch
 	public void saveReading(SensorReading sensorReading)
 			throws DataSyncException, ServiceException, ValidationException;
+	
+	// Input : None
+	// Output : None
+	// Action : Create the indices with the defined mapping and settings in Elasticsearch
+	public void createIndices() throws ServiceException, DataSyncException;
+	
+	
+	// Input : None
+	// Output : None
+	// Action : Delete the indices with the defined mapping and settings in Elasticsearch	
+	public void deleteIndices() throws ServiceException, DataSyncException;
 
 }
